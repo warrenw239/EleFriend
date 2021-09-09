@@ -1,0 +1,21 @@
+{
+  "name": "dino-nuggets",
+  "version": "1.0.0",
+  "description": "Dino-Nuggets",
+  "main": "server.js",
+  "scripts": {
+    "test": "node test.js",
+    "start": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Dino-Nuggets"
+  },
+  "author": "Warren Williams",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.5"
+  }
+}
