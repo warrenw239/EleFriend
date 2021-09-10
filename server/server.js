@@ -14,6 +14,7 @@ const elephantSchema = new mongoose.Schema({
   species: String,
   note: String,
   image: String,
+  index: Number,
 });
 
 const elephant = mongoose.model('Dino', elephantSchema);
@@ -30,13 +31,13 @@ App.use(express.static(CLIENT_PATH));
 App.get('/friends', (req, res) => {
   elephant.find().then((savedElephants) => {
     res.send(savedElephants);
-  });
+  }).catch((err) => {
+    console.log(err);
+  })
 });
 
 //ADD ELEPHANT TO DB ON CLICK*
 App.post('/', (req, res) => {
-  // console.log('hello');
-  // console.log(req.query);
   elephant.create(req.query);
 });
 
@@ -45,39 +46,34 @@ App.get('/data', (req, res) => {
   mod
     .getElephants()
     .then((elephants) => {
-      console.log(elephants);
       res.send(elephants);
     })
     .catch((err) => {
-      console.log('err getting 3rd party data');
+      console.log(err);
     });
 });
 
 //DELETE ALL FRIENDS
 App.put('/friends', (req, res) => {
-  // console.log('deleting friends')
   elephant
     .deleteMany()
     .then(elephant.find())
     .then((elephants) => {
-      console.log(elephants, 'why am i getting called?');
-    });
+      console.log(elephants);
+    }).catch((err) => {
+      console.log(err);
+    })
 });
 
 App.post('/friends', (req, res) => {
-  // console.log('lets update a name!')
   console.log(req.query);
   elephant
     .updateMany({ Ename: req.query.oldName }, { Ename: req.query.newName })
     .then((result) => {
       console.log(result);
+    }).catch((err) => {
+      console.log(err);
     })
-    // .then(elephant.find({Ename: req.query.newName}))
-    .then(elephant.find())
-    .then((elephants) => {
-      console.log(elephants)
-    });
-
 });
 
 App.listen(8080, () => {

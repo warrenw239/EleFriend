@@ -48,6 +48,8 @@ class App extends Component {
         this.setState({
           friends: friends.data,
         });
+      }).catch((err) => {
+        console.log(err);
       })
     );
   }
@@ -60,8 +62,9 @@ class App extends Component {
       this.setState({
         friends: friends.data,
       });
-      // console.log(this.state.friends);
-    });
+    }).catch((err) => {
+      console.log(err);
+    })
   }
 
   // typing(e) {
@@ -75,12 +78,12 @@ class App extends Component {
       method: 'get',
       url: 'http://localhost:8080/data',
     }).then((elephants) => {
-      // console.log(elephants.data);
       this.setState({
-        elephants: elephants.data,
+        elephants: elephants.data,        
       });
-      // console.log(this.state.elephants);
-    });
+    }).catch((err) => {
+      console.log(err);
+    })
   }
 
   addToDB(elephant) {
@@ -93,6 +96,7 @@ class App extends Component {
         species: elephant.species,
         sex: elephant.sex,
         note: elephant.note,
+        index: elephant.index
       },
     }).then(
       axios({
@@ -155,14 +159,14 @@ class App extends Component {
 
         {this.state.friends.map((friend) => {
           return (
-            <div style={{ backgroundColor: 'lightGreen' }}>
+            <div key={friend.index}style={{ backgroundColor: 'lightGreen' }}>
               <Elephant
                 name={friend.Ename}
-                image={friend.image}
                 species={friend.species}
                 sex={friend.sex}
                 note={friend.note}
-                key={friend._id}
+                index={friend.index}
+                image={friend.image}
               />
             </div>
           );
@@ -172,17 +176,19 @@ class App extends Component {
           if (elephant != null) {
             return (
               <div
-                style={{ 'background-color': 'grey', border: '10px' }}
-                key={elephant._id}
+                style={{ background: 'grey', border: '10px' }}
+
                 onClick={() => this.addToDB(elephant)}
+                key={elephant.index}
               >
                 <h3>Pick some new friends</h3>
                 <Elephant
                   name={elephant.Ename}
-                  image={elephant.image}
                   species={elephant.species}
                   sex={elephant.sex}
                   note={elephant.note}
+                  key={elephant.index}
+                  image={elephant.image}
                 />
               </div>
             );

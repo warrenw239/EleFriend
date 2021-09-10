@@ -16,6 +16,7 @@ const getElephants = () => {
             sex: elephant.sex,
             image: elephant.image,
             note: elephant.note,
+            index: elephant.index
           };
         }
       });
