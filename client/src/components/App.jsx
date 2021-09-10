@@ -35,7 +35,7 @@ class App extends Component {
     newName = this.state.newName;
     axios({
       method: 'post',
-      url: 'http://localhost:8080/friends',
+      url: 'http://137.184.97.214:8080/friends',
       params: {
         oldName: oldName,
         newName: newName,
@@ -43,7 +43,7 @@ class App extends Component {
     }).then(
       axios({
         method: 'get',
-        url: 'http://localhost:8080/friends',
+        url: 'http://137.184.97.214:8080/friends',
       }).then((friends) => {
         this.setState({
           friends: friends.data,
@@ -57,7 +57,7 @@ class App extends Component {
   componentDidMount() {
     axios({
       method: 'get',
-      url: 'http://localhost:8080/friends',
+      url: 'http://137.184.97.214:8080/friends',
     }).then((friends) => {
       this.setState({
         friends: friends.data,
@@ -76,7 +76,7 @@ class App extends Component {
     console.log('looking for new data.');
     axios({
       method: 'get',
-      url: 'http://localhost:8080/data',
+      url: 'http://137.184.97.214:8080/data',
     }).then((elephants) => {
       this.setState({
         elephants: elephants.data,        
@@ -89,7 +89,7 @@ class App extends Component {
   addToDB(elephant) {
     axios({
       method: 'post',
-      url: 'http://localhost:8080',
+      url: 'http://137.184.97.214:8080',
       params: {
         Ename: elephant.Ename,
         image: elephant.image,
@@ -101,7 +101,7 @@ class App extends Component {
     }).then(
       axios({
         method: 'get',
-        url: 'http://localhost:8080/friends',
+        url: 'http://137.184.97.214:8080/friends',
       }).then((friends) => {
         this.setState({
           friends: friends.data,
@@ -113,11 +113,11 @@ class App extends Component {
   deleteFriends() {
     axios({
       method: 'put',
-      url: 'http://localhost:8080/friends',
+      url: 'http://137.184.97.214:8080/friends',
     }).then(
       axios({
         method: 'get',
-        url: 'http://localhost:8080/friends',
+        url: 'http://137.184.97.214:8080/friends',
       }).then((friends) => {
         this.setState({
           friends: friends.data,
