@@ -1,5 +1,6 @@
 const path = require('path');
-
+const webpack = require('webpack');
+require('dotenv').config();
 const SRC_DIR = path.join(__dirname, '/client/src');
 const DIST_DIR = path.join(__dirname, '/client/dist');
 
@@ -19,4 +20,9 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env.API_HOST": JSON.stringify(process.env.API_HOST)
+    })
+  ]
 };

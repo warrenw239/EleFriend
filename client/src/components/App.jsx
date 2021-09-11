@@ -3,6 +3,7 @@ import { Component } from 'react';
 import axios from 'axios';
 import Elephant from './elephants.jsx';
 
+const API_HOST = process.env.API_HOST;
 class App extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +36,7 @@ class App extends Component {
     newName = this.state.newName;
     axios({
       method: 'post',
-      url: 'http://137.184.97.214:8080/friends',
+      url: `http://${API_HOST}:8080/friends`,
       params: {
         oldName: oldName,
         newName: newName,
@@ -43,7 +44,7 @@ class App extends Component {
     }).then(
       axios({
         method: 'get',
-        url: 'http://137.184.97.214:8080/friends',
+        url: `http://${API_HOST}:8080/friends`,
       }).then((friends) => {
         this.setState({
           friends: friends.data,
@@ -57,7 +58,7 @@ class App extends Component {
   componentDidMount() {
     axios({
       method: 'get',
-      url: 'http://137.184.97.214:8080/friends',
+      url: `http://${API_HOST}:8080/friends`,
     }).then((friends) => {
       this.setState({
         friends: friends.data,
@@ -76,7 +77,7 @@ class App extends Component {
     console.log('looking for new data.');
     axios({
       method: 'get',
-      url: 'http://137.184.97.214:8080/data',
+      url: `http://${API_HOST}:8080/data`,
     }).then((elephants) => {
       this.setState({
         elephants: elephants.data,        
@@ -89,7 +90,7 @@ class App extends Component {
   addToDB(elephant) {
     axios({
       method: 'post',
-      url: 'http://137.184.97.214:8080',
+      url: `http://${API_HOST}:8080`,
       params: {
         Ename: elephant.Ename,
         image: elephant.image,
@@ -101,7 +102,7 @@ class App extends Component {
     }).then(
       axios({
         method: 'get',
-        url: 'http://137.184.97.214:8080/friends',
+        url: `http://${API_HOST}:8080/friends`,
       }).then((friends) => {
         this.setState({
           friends: friends.data,
@@ -113,11 +114,11 @@ class App extends Component {
   deleteFriends() {
     axios({
       method: 'put',
-      url: 'http://137.184.97.214:8080/friends',
+      url: `http://${API_HOST}:8080/friends`,
     }).then(
       axios({
         method: 'get',
-        url: 'http://137.184.97.214:8080/friends',
+        url: `http://${API_HOST}:8080/friends`,
       }).then((friends) => {
         this.setState({
           friends: friends.data,
@@ -157,9 +158,9 @@ class App extends Component {
         </div>
         <h3>here are your current friends</h3>
 
-        {this.state.friends.map((friend) => {
+        {this.state.friends.map((friend, i) => {
           return (
-            <div key={friend.index}style={{ backgroundColor: 'lightGreen' }}>
+            <div key={i} style={{ backgroundColor: 'lightGreen' }}>
               <Elephant
                 name={friend.Ename}
                 species={friend.species}
@@ -172,14 +173,14 @@ class App extends Component {
           );
         })}
 
-        {this.state.elephants.map((elephant) => {
-          if (elephant != null) {
+        {this.state.elephants.map((elephant, i) => {
+          if (elephant) {
             return (
               <div
                 style={{ background: 'grey', border: '10px' }}
 
                 onClick={() => this.addToDB(elephant)}
-                key={elephant.index}
+                key={i}
               >
                 <h3>Pick some new friends</h3>
                 <Elephant
@@ -187,7 +188,6 @@ class App extends Component {
                   species={elephant.species}
                   sex={elephant.sex}
                   note={elephant.note}
-                  key={elephant.index}
                   image={elephant.image}
                 />
               </div>
